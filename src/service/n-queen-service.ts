@@ -3,7 +3,7 @@ export default class NQueenService {
     private leftRow: boolean[] = [];
     private upperDiagonal: boolean[] = [];
     private lowerDiagonal: boolean[] = [];
-    private result = [];
+    private result: any[] = [];
 
     constructor(
         private n: number
@@ -23,14 +23,26 @@ export default class NQueenService {
         }
     }
 
-    getPositions() {
+    getPositions(): any[] {
         this.solve(0);
         return this.result;
     }
 
     private solve(col: number) {
         if (col === this.n) {
-            console.log(this.board);
+            const temp1 = [];
+
+            for (let i = 0; i < this.n; ++i) {
+                const temp2 = [];
+
+                for (let j = 0; j < this.n; ++j) {
+                    temp2.push(this.board[i][j]);
+                }
+                temp1.push(temp2);
+            }
+
+            this.result.push(temp1);
+            return;
         }
 
         for (let row = 0; row < this.n; ++row) {
@@ -53,5 +65,4 @@ export default class NQueenService {
             }
         }
     }
-
 }
