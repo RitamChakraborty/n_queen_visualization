@@ -1,0 +1,9 @@
+#board {
+    display: grid;
+    place-items: center;
+    width: min-content;
+    gap: 4px;
+    margin: 1rem;
+    border: 1px solid black;
+    padding: 1rem;
+}

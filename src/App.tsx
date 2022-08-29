@@ -1,15 +1,11 @@
 import NQueenService from "./service/n-queen-service";
 import './App.css';
-import {useRef} from "react";
+import {useRef, useState} from "react";
+import Board from "./component/board/Board";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
-
-    function handle() {
-        const nQueenService = new NQueenService(8);
-        const positions = nQueenService.getPositions()
-        console.log(positions);
-    }
+    const [boards, setBoards] = useState<any[]>([]);
 
     function onQueensChange() {
     }
@@ -18,28 +14,44 @@ export default function App() {
         return parseInt(queens!.current!.value);
     }
 
-    function start() {
+    function initializeSelectedQueens() {
         if (!queens!.current!.value) {
             queens!.current!.value = "4";
         }
+    }
 
-        console.log(getSelectedQueens());
+    function start() {
+        initializeSelectedQueens();
+        const queens = getSelectedQueens();
+        const nQueenService = new NQueenService(queens);
+        const positions = nQueenService.getPositions()
+        console.log(positions);
+        setBoards(positions);
     }
 
     return (
         <>
             <div className="container">
-                <select
-                    name="queens"
-                    id="queens"
-                    placeholder="Select number of queens"
-                    ref={queens}
-                    onChange={onQueensChange}
-                >
-                    <option value="4">4 Queens</option>
-                    <option value="8">8 Queens</option>
-                </select>
-                <button onClick={start}>Start</button>
+                <nav>
+                    <select
+                        name="queens"
+                        id="queens"
+                        placeholder="Select number of queens"
+                        ref={queens}
+                        onChange={onQueensChange}
+                    >
+                        <option value="4">4 Queens</option>
+                        <option value="8">8 Queens</option>
+                    </select>
+                    <button onClick={start}>Start</button>
+                </nav>
+                <div className="boards">
+                    {
+                        boards.map((board: any[], i: number) => {
+                            return <Board key={`${i}`} board={board}/>
+                        })
+                    }
+                </div>
             </div>
         </>
     );
