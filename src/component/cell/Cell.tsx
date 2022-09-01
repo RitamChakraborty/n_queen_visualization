@@ -1,7 +1,8 @@
 import './Cell.css';
 
 type CellProps = {
-    value: number
+    index: number;
+    value: number;
 }
 
 export default function Cell(props: CellProps) {
@@ -9,13 +10,26 @@ export default function Cell(props: CellProps) {
         if (props.value === 1) {
             return "👸";
         } else {
-            return "⬜️";
+            return " ";
+        }
+    }
+
+    function getCellBackgroundColor(): string {
+        if (Math.floor(props.index / 10) % 2 == 0) {
+            return props.index % 2 == 0 ? 'black' : 'white';
+        } else {
+            return props.index % 2 == 0 ? 'white' : 'black';
         }
     }
 
     return (
-        <span id="cell">
+        <div
+            id="cell"
+            style={{
+                backgroundColor: getCellBackgroundColor()
+            }}
+        >
             <span>{getCellValue()}</span>
-        </span>
+        </div>
     );
 }

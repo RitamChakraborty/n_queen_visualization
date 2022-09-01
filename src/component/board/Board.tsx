@@ -17,7 +17,11 @@ export default function Board(props: BoardProps) {
                 props.board.map((row: any, i: number) => {
                     return row.map((col: any, j: number) => {
                         let value: number = col as number;
-                        return <Cell key={`${i}${j}`} value={value}/>
+                        return <Cell
+                            key={`${i}${j}`}
+                            index={parseInt(`${i}${j}`)}
+                            value={value}
+                        />
                     });
                 })
             }
