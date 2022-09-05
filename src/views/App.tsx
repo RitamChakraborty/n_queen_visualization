@@ -1,11 +1,11 @@
 import './App.css';
 import Board from "../components/board/Board";
-import {useRef, useState} from "react";
-import NQueenService from "../contexts/n-queen-service";
+import {useContext, useRef} from "react";
+import {BoardContext} from "../contexts/BoardContext";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
-    const [boards, setBoards] = useState<any[]>([]);
+    const boardModel = useContext(BoardContext)!;
 
     function onQueensChange() {
     }
@@ -23,10 +23,7 @@ export default function App() {
     function start() {
         initializeSelectedQueens();
         const queens = getSelectedQueens();
-        const nQueenService = new NQueenService(queens);
-        const positions = nQueenService.getPositions()
-        console.log(positions);
-        setBoards(positions);
+        boardModel.start(queens);
     }
 
     return (
@@ -47,7 +44,7 @@ export default function App() {
                 </nav>
                 <div className="boards">
                     {
-                        boards.map((board: any[], i: number) => {
+                        boardModel.board.map((board: any[], i: number) => {
                             return <Board key={`${i}`} board={board}/>
                         })
                     }
