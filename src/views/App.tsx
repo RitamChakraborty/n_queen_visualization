@@ -1,9 +1,9 @@
-import './Home.css';
-import Board from "../component/board/Board";
+import './App.css';
+import Board from "../components/board/Board";
 import {useRef, useState} from "react";
-import NQueenService from "../service/n-queen-service";
+import NQueenService from "../contexts/n-queen-service";
 
-export default function Home() {
+export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
     const [boards, setBoards] = useState<any[]>([]);
 
