@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useEffect, useState} from "react";
+import {createContext, ReactNode, useState} from "react";
 
 type BoardProviderProps = {
     children: ReactNode;
@@ -14,35 +14,36 @@ export const BoardContext = createContext<BoardModel | null>(null);
 export function BoardProvider(props: BoardProviderProps) {
     const [board, setBoard] = useState<any[]>([]);
     const [solutions, setSolutions] = useState<number>(0);
+    const [delayInMills, setDelayInMills] = useState<number>(100);
 
     let n = 0;
     let b: any[] = [];
     let leftRow: boolean[] = [];
     let upperDiagonal: boolean[] = [];
     let lowerDiagonal: boolean[] = [];
-    let result: any[] = [];
 
-    useEffect(() => {
-        console.log(board);
-    }, [board]);
-
-    useEffect(() => {
-        console.log("Solutions : ", solutions);
-    }, [solutions]);
-
-    async function start(order: number) {
-        n = order
-        leftRow = [];
-        upperDiagonal = [];
-        lowerDiagonal = [];
-        result = [];
+    function createEmptyBoard(): any[] {
+        let arr = [];
 
         for (let i = 0; i < n; ++i) {
             let temp = [];
             for (let j = 0; j < n; ++j) {
                 temp.push(0);
             }
-            b.push(temp);
+            arr.push(temp);
+        }
+
+        return arr;
+    }
+
+    async function start(order: number) {
+        n = order
+        leftRow = [];
+        upperDiagonal = [];
+        lowerDiagonal = [];
+        b = createEmptyBoard();
+
+        for (let i = 0; i < n; ++i) {
             leftRow.push(false);
         }
 
@@ -51,34 +52,61 @@ export function BoardProvider(props: BoardProviderProps) {
             lowerDiagonal.push(false);
         }
 
-        setBoard(b);
+        setBoard([b]);
         await solve(0);
+        setBoard((value) => {
+            return value.slice(0, solutions - 1);
+        })
     }
 
-    function delay(timeInMills: number) {
+    function pause() {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve('resolve');
-            }, timeInMills);
+            }, delayInMills);
         });
     }
 
     async function solve(col: number) {
         if (col === n) {
-            const temp1 = [];
+            setBoard((value) => {
+                const oldValues: any[] = [];
+                const newValue: any[] = [];
 
-            for (let i = 0; i < n; ++i) {
-                const temp2 = [];
+                if (value.length > 1) {
+                    for (let i = 0; i < value.length - 1; ++i) {
+                        const oldValue = [];
+                        for (let j = 0; j < n; ++j) {
+                            const temp = [];
 
-                for (let j = 0; j < n; ++j) {
-                    temp2.push(b[i][j]);
+                            for (let k = 0; k < n; ++k) {
+                                temp.push(value[i][j][k]);
+                            }
+
+                            oldValue.push(temp);
+                        }
+                        oldValues.push(oldValue);
+                    }
                 }
-                temp1.push(temp2);
-            }
 
-            result.push(temp1);
+                for (let i = 0; i < n; ++i) {
+                    const temp = [];
+
+                    for (let j = 0; j < n; ++j) {
+                        temp.push(b[i][j]);
+                    }
+                    newValue.push(temp);
+                }
+
+                console.log('oldValues', oldValues);
+                console.log('newValues', newValue);
+
+                return value.length > 1
+                    ? [...oldValues, newValue, createEmptyBoard()]
+                    : [newValue, createEmptyBoard()];
+            })
             setSolutions((value) => value + 1);
-            console.log(result)
+            await pause();
 
             return;
         }
@@ -94,15 +122,33 @@ export function BoardProvider(props: BoardProviderProps) {
                 lowerDiagonal[row + col] = true;
                 upperDiagonal[n - 1 + col - row] = true;
 
-                setBoard([b]);
+                setBoard((value) => {
+                    return [...value.slice(0, value.length - 1), b];
+                });
 
-                await delay(1000);
+                await pause();
                 await solve(col + 1);
 
                 b[row][col] = 0;
                 leftRow[row] = false;
                 lowerDiagonal[row + col] = false;
                 upperDiagonal[n - 1 + col - row] = false;
+
+                setBoard((value) => {
+                    return [...value.slice(0, value.length - 1), b];
+                });
+
+                await pause();
+            } else {
+                b[row][col] = 1;
+                setBoard((value) => {
+                    return [...value.slice(0, value.length - 1), b];
+                });
+                await pause();
+                b[row][col] = 0;
+                setBoard((value) => {
+                    return [...value.slice(0, value.length - 1), b];
+                });
             }
         }
     }
