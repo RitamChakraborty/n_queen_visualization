@@ -1,11 +1,18 @@
 import './App.css';
 import Board from "../components/board/Board";
-import {useContext, useRef} from "react";
+import {useContext, useEffect, useRef} from "react";
 import {BoardContext} from "../contexts/BoardContext";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
     const boardModel = useContext(BoardContext)!;
+
+    // On Mount
+    useEffect(() => {
+        if (!queens!.current!.value) {
+            queens!.current!.value = "4";
+        }
+    });
 
     function onQueensChange() {
     }
@@ -14,14 +21,7 @@ export default function App() {
         return parseInt(queens!.current!.value);
     }
 
-    function initializeSelectedQueens() {
-        if (!queens!.current!.value) {
-            queens!.current!.value = "4";
-        }
-    }
-
     function start() {
-        initializeSelectedQueens();
         const queens = getSelectedQueens();
         boardModel.start(queens);
     }

@@ -1,4 +1,4 @@
-import {createContext, ReactNode, useState} from "react";
+import {createContext, ReactNode, useEffect, useState} from "react";
 
 type BoardProviderProps = {
     children: ReactNode;
@@ -13,6 +13,8 @@ export const BoardContext = createContext<BoardModel | null>(null);
 
 export function BoardProvider(props: BoardProviderProps) {
     const [board, setBoard] = useState<any[]>([]);
+    const [solutions, setSolutions] = useState<number>(0);
+
     let n = 0;
     let b: any[] = [];
     let leftRow: boolean[] = [];
@@ -20,13 +22,20 @@ export function BoardProvider(props: BoardProviderProps) {
     let lowerDiagonal: boolean[] = [];
     let result: any[] = [];
 
-    function start(order: number) {
+    useEffect(() => {
+        console.log(board);
+    }, [board]);
+
+    useEffect(() => {
+        console.log("Solutions : ", solutions);
+    }, [solutions]);
+
+    async function start(order: number) {
         n = order
         leftRow = [];
         upperDiagonal = [];
         lowerDiagonal = [];
         result = [];
-        setBoard([]);
 
         for (let i = 0; i < n; ++i) {
             let temp = [];
@@ -42,10 +51,19 @@ export function BoardProvider(props: BoardProviderProps) {
             lowerDiagonal.push(false);
         }
 
-        solve(0);
+        setBoard(b);
+        await solve(0);
     }
 
-    function solve(col: number) {
+    function delay(timeInMills: number) {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve('resolve');
+            }, timeInMills);
+        });
+    }
+
+    async function solve(col: number) {
         if (col === n) {
             const temp1 = [];
 
@@ -59,7 +77,9 @@ export function BoardProvider(props: BoardProviderProps) {
             }
 
             result.push(temp1);
-            setBoard(result);
+            setSolutions((value) => value + 1);
+            console.log(result)
+
             return;
         }
 
@@ -74,7 +94,10 @@ export function BoardProvider(props: BoardProviderProps) {
                 lowerDiagonal[row + col] = true;
                 upperDiagonal[n - 1 + col - row] = true;
 
-                solve(col + 1);
+                setBoard([b]);
+
+                await delay(1000);
+                await solve(col + 1);
 
                 b[row][col] = 0;
                 leftRow[row] = false;
