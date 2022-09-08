@@ -14,7 +14,7 @@ export const BoardContext = createContext<BoardModel | null>(null);
 export function BoardProvider(props: BoardProviderProps) {
     const [board, setBoard] = useState<any[]>([]);
     const [solutions, setSolutions] = useState<number>(0);
-    const [delayInMills, setDelayInMills] = useState<number>(100);
+    const [delayInMills, setDelayInMills] = useState<number>(1);
 
     let n = 0;
     let b: any[] = [];
@@ -97,9 +97,6 @@ export function BoardProvider(props: BoardProviderProps) {
                     }
                     newValue.push(temp);
                 }
-
-                console.log('oldValues', oldValues);
-                console.log('newValues', newValue);
 
                 return value.length > 1
                     ? [...oldValues, newValue, createEmptyBoard()]
