@@ -92,6 +92,14 @@ export function BoardProvider(props: BoardProviderProps) {
         });
     }
 
+    async function updateBoard(b: any[]) {
+        setBoard((value) => {
+            return [b, ...value.slice(1, value.length)];
+        });
+
+        await pause();
+    }
+
     async function solve(col: number) {
         if (col === n) {
             setBoard((value) => {
@@ -124,8 +132,11 @@ export function BoardProvider(props: BoardProviderProps) {
                 }
 
                 return value.length > 1
-                    ? [...oldValues, newValue, createEmptyBoard()]
-                    : [newValue, createEmptyBoard()];
+                    ? [createEmptyBoard(), newValue, ...oldValues]
+                    : [createEmptyBoard(), newValue];
+                // return value.length > 1
+                //     ? [...oldValues, newValue, createEmptyBoard()]
+                //     : [newValue, createEmptyBoard()];
             })
             setSolutions((value) => value + 1);
             await pause();
@@ -144,11 +155,7 @@ export function BoardProvider(props: BoardProviderProps) {
                 lowerDiagonal[row + col] = true;
                 upperDiagonal[n - 1 + col - row] = true;
 
-                setBoard((value) => {
-                    return [...value.slice(0, value.length - 1), b];
-                });
-
-                await pause();
+                await updateBoard(b);
                 await solve(col + 1);
 
                 b[row][col] = 0;
@@ -156,21 +163,15 @@ export function BoardProvider(props: BoardProviderProps) {
                 lowerDiagonal[row + col] = false;
                 upperDiagonal[n - 1 + col - row] = false;
 
-                setBoard((value) => {
-                    return [...value.slice(0, value.length - 1), b];
-                });
-
-                await pause();
+                await updateBoard(b);
             } else {
                 b[row][col] = 1;
-                setBoard((value) => {
-                    return [...value.slice(0, value.length - 1), b];
-                });
-                await pause();
+
+                await updateBoard(b);
+
                 b[row][col] = 0;
-                setBoard((value) => {
-                    return [...value.slice(0, value.length - 1), b];
-                });
+
+                await updateBoard(b);
             }
         }
     }

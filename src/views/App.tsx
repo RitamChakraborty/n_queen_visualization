@@ -62,7 +62,7 @@ export default function App() {
                         id="speed"
                         max="2000"
                         min="0"
-                        defaultValue="2000"
+                        defaultValue="0"
                         ref={speed}
                         onChange={onSpeedChange}
                         disabled={boardModel.status === Status.IN_PROGRESS}
