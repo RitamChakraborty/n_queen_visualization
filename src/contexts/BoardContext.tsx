@@ -59,6 +59,7 @@ export function BoardProvider(props: BoardProviderProps) {
     }
 
     async function start(order: number) {
+        setSolutions(0);
         setStatus(Status.IN_PROGRESS);
         n = order
         leftRow = [];
