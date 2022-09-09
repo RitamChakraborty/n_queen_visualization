@@ -17,6 +17,7 @@ export default function QueenSelector() {
 
     function onQueensSelectionChange(queens: Queens) {
         setQueens(queens);
+        boardModel.reset();
         boardModel.setQueens(queens.valueOf());
     }
 
