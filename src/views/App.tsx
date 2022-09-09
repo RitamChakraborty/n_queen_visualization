@@ -1,7 +1,7 @@
 import './App.css';
-import Board from "../components/board/Board";
 import {useContext, useEffect, useRef} from "react";
 import {BoardContext, Status} from "../contexts/BoardContext";
+import Boards from "../components/boards/Boards";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
@@ -80,13 +80,7 @@ export default function App() {
                     </button>
                 </nav>
                 <div className="solutions">Solutions : {boardModel.solutions}</div>
-                <div className="boards">
-                    {
-                        boardModel.board.map((board: any[], i: number) => {
-                            return <Board key={`${i}`} board={board}/>
-                        })
-                    }
-                </div>
+                <Boards/>
             </div>
         </div>
     );

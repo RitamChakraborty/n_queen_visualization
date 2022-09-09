@@ -11,7 +11,7 @@ export enum Status {
     FINISHED
 }
 
-type BoardModel = {
+export type BoardModel = {
     board: any[];
     solutions: number;
     speed: number;
