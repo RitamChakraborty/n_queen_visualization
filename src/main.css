@@ -21,6 +21,7 @@
 
 body {
     color: var(--font-color);
+    overflow: hidden;
 }
 
 button {
