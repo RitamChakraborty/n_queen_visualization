@@ -17,6 +17,8 @@
     --unselected-color: #777777;
     --disabled-color: #999999;
     --animation-delay: 200ms;
+    --scroll-bar-background-color: transparent;
+    --scroll-bar-thumb-background-color: #888888;
 }
 
 body {

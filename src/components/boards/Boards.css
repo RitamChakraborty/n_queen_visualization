@@ -7,3 +7,12 @@
     margin: 1rem 0;
     overflow-y: scroll;
 }
+
+#Boards::-webkit-scrollbar {
+    width: 0.5rem;
+    background-color: var(--scroll-bar-background-color);
+}
+
+#Boards::-webkit-scrollbar-thumb {
+    background-color: var(--scroll-bar-thumb-background-color);
+}

@@ -3,4 +3,5 @@
     place-items: center;
     width: min-content;
     border: 1px solid black;
+    height: min-content;
 }
