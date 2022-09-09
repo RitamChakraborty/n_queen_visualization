@@ -6,7 +6,7 @@
     background: none;
     border: none;
     outline: none;
-    padding: 0 0.25rem;
+    padding: 0 0.5rem;
     font-size: var(--small-font-size);
     cursor: pointer;
     color: var(--unselected-color);
