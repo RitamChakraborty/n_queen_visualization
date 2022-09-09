@@ -2,6 +2,7 @@ import './App.css';
 import {useContext, useEffect, useRef} from "react";
 import {BoardContext, Status} from "../contexts/BoardContext";
 import Boards from "../components/boards/Boards";
+import {QueenSelector} from "../components";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
@@ -45,6 +46,7 @@ export default function App() {
         <div id="Home">
             <div className="container">
                 <nav>
+                    <QueenSelector/>
                     <select
                         name="queens"
                         id="queens"
