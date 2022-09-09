@@ -41,9 +41,14 @@ button:focus, button:active {
 button:disabled {
     cursor: not-allowed;
     color: var(--disabled-color);
+    border: 2px solid var(--border-color-light);
 }
 
 input:disabled {
     cursor: not-allowed !important;
     opacity: 0.8;
+}
+
+input, button {
+    transition: var(--animation-delay) ease-in-out;
 }

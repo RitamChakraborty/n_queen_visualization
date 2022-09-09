@@ -9,7 +9,6 @@
     padding: 0 0.25rem;
     font-size: var(--small-font-size);
     cursor: pointer;
-    transition: var(--animation-delay) ease-in-out;
     color: var(--unselected-color);
 }
 
@@ -21,6 +20,7 @@
 .selector:disabled {
     color: var(--disabled-color);
     cursor: not-allowed;
+    border: none;
 }
 
 .selected {
