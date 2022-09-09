@@ -80,7 +80,7 @@ export function BoardProvider(props: BoardProviderProps) {
         setBoard([b]);
         await solve(0);
         setBoard((value) => {
-            return value.slice(0, solutions - 1);
+            return value.slice(1);
         })
         setStatus(Status.FINISHED);
     }
@@ -135,9 +135,6 @@ export function BoardProvider(props: BoardProviderProps) {
                 return value.length > 1
                     ? [createEmptyBoard(), newValue, ...oldValues]
                     : [createEmptyBoard(), newValue];
-                // return value.length > 1
-                //     ? [...oldValues, newValue, createEmptyBoard()]
-                //     : [newValue, createEmptyBoard()];
             })
             setSolutions((value) => value + 1);
             await pause();
