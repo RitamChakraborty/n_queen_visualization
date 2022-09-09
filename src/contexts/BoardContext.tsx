@@ -4,10 +4,18 @@ type BoardProviderProps = {
     children: ReactNode;
 }
 
+
+export enum Status {
+    INITIAL,
+    IN_PROGRESS,
+    FINISHED
+}
+
 type BoardModel = {
     board: any[];
     solutions: number;
     speed: number;
+    status: Status;
     start: (n: number) => void;
     setSpeed: (speed: number) => void;
     reset: () => void;
@@ -19,6 +27,7 @@ export function BoardProvider(props: BoardProviderProps) {
     const [board, setBoard] = useState<any[]>([]);
     const [solutions, setSolutions] = useState<number>(0);
     const [delayInMills, setDelayInMills] = useState<number>(0);
+    const [status, setStatus] = useState<Status>(Status.INITIAL);
 
     let n = 0;
     let b: any[] = [];
@@ -50,6 +59,7 @@ export function BoardProvider(props: BoardProviderProps) {
     }
 
     async function start(order: number) {
+        setStatus(Status.IN_PROGRESS);
         n = order
         leftRow = [];
         upperDiagonal = [];
@@ -70,6 +80,7 @@ export function BoardProvider(props: BoardProviderProps) {
         setBoard((value) => {
             return value.slice(0, solutions - 1);
         })
+        setStatus(Status.FINISHED);
     }
 
     function pause() {
@@ -168,6 +179,7 @@ export function BoardProvider(props: BoardProviderProps) {
             board: board,
             solutions: solutions,
             speed: delayInMills,
+            status: status,
             start: start,
             setSpeed: onSpeedChange,
             reset: resetBoard,

@@ -1,7 +1,7 @@
 import './App.css';
 import Board from "../components/board/Board";
 import {useContext, useEffect, useRef} from "react";
-import {BoardContext} from "../contexts/BoardContext";
+import {BoardContext, Status} from "../contexts/BoardContext";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
@@ -47,11 +47,16 @@ export default function App() {
                         placeholder="Select number of queens"
                         ref={queens}
                         onChange={onQueensChange}
+                        disabled={boardModel.status === Status.IN_PROGRESS}
                     >
                         <option value="4">4 Queens</option>
                         <option value="8">8 Queens</option>
                     </select>
-                    <button onClick={start}>Start</button>
+                    <button
+                        onClick={start}
+                        disabled={boardModel.status === Status.IN_PROGRESS}
+                    >Start
+                    </button>
                     <input
                         type="range"
                         name="speed"
@@ -61,6 +66,7 @@ export default function App() {
                         defaultValue="2000"
                         ref={speed}
                         onChange={onSpeedChange}
+                        disabled={boardModel.status === Status.IN_PROGRESS}
                     />
                 </nav>
                 <div className="solutions">Solutions : {boardModel.solutions}</div>
