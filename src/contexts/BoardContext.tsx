@@ -7,7 +7,9 @@ type BoardProviderProps = {
 type BoardModel = {
     board: any[];
     solutions: number;
+    speed: number;
     start: (n: number) => void;
+    setSpeed: (speed: number) => void;
     reset: () => void;
 }
 
@@ -41,6 +43,10 @@ export function BoardProvider(props: BoardProviderProps) {
     function resetBoard() {
         setBoard([]);
         setSolutions(0);
+    }
+
+    async function onSpeedChange(speed: number) {
+        setDelayInMills(speed);
     }
 
     async function start(order: number) {
@@ -161,8 +167,10 @@ export function BoardProvider(props: BoardProviderProps) {
         <BoardContext.Provider value={{
             board: board,
             solutions: solutions,
+            speed: delayInMills,
             start: start,
-            reset: resetBoard
+            setSpeed: onSpeedChange,
+            reset: resetBoard,
         }}>
             {props.children}
         </BoardContext.Provider>

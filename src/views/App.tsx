@@ -5,6 +5,7 @@ import {BoardContext} from "../contexts/BoardContext";
 
 export default function App() {
     const queens = useRef<HTMLSelectElement>(null);
+    const speed = useRef<HTMLInputElement>(null);
     const boardModel = useContext(BoardContext)!;
 
     // On Mount
@@ -12,6 +13,7 @@ export default function App() {
         if (!queens!.current!.value) {
             queens!.current!.value = "4";
         }
+        boardModel.setSpeed(getSpeed());
     });
 
     function onQueensChange() {
@@ -25,6 +27,14 @@ export default function App() {
     function start() {
         const queens = getSelectedQueens();
         boardModel.start(queens);
+    }
+
+    function getSpeed(): number {
+        return parseInt(speed!.current!.value);
+    }
+
+    function onSpeedChange() {
+        boardModel.setSpeed(getSpeed());
     }
 
     return (
@@ -42,6 +52,16 @@ export default function App() {
                         <option value="8">8 Queens</option>
                     </select>
                     <button onClick={start}>Start</button>
+                    <input
+                        type="range"
+                        name="speed"
+                        id="speed"
+                        max="2000"
+                        min="0"
+                        defaultValue="2000"
+                        ref={speed}
+                        onChange={onSpeedChange}
+                    />
                 </nav>
                 <div className="solutions">Solutions : {boardModel.solutions}</div>
                 <div className="boards">
