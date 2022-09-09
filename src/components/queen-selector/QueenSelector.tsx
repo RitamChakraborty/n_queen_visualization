@@ -1,5 +1,5 @@
 import {BoardContext, BoardModel, Status} from "../../contexts/BoardContext";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import "./QueenSelector.css";
 
 enum Queens {
@@ -10,6 +10,10 @@ enum Queens {
 export default function QueenSelector() {
     const boardModel: BoardModel = useContext(BoardContext)!;
     const [queens, setQueens] = useState<Queens>(Queens.FOUR_QUEENS);
+
+    useEffect(() => {
+        boardModel.setQueens(queens.valueOf());
+    });
 
     function onQueensSelectionChange(queens: Queens) {
         setQueens(queens);
