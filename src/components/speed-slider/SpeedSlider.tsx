@@ -1,17 +1,17 @@
 import {BoardContext, BoardModel, Status} from "../../contexts/BoardContext";
-import {useContext, useEffect, useRef} from "react";
+import {useContext, useLayoutEffect, useRef} from "react";
 import "./SpeedSlider.css";
 
 export default function SpeedSlider() {
     const speed = useRef<HTMLInputElement>(null);
     const boardModel: BoardModel = useContext(BoardContext)!;
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         boardModel.setSpeed(getSpeed());
     });
 
     function getSpeed(): number {
-        return parseInt(speed!.current!.value);
+        return speed.current ? parseInt(speed!.current!.value) : 0;
     }
 
     function onSpeedChange() {
@@ -27,10 +27,12 @@ export default function SpeedSlider() {
                 max="2000"
                 min="0"
                 defaultValue="0"
+                step="100"
                 ref={speed}
                 onChange={onSpeedChange}
                 disabled={boardModel.status === Status.IN_PROGRESS}
             />
+            <p>{getSpeed()} ms</p>
         </div>
     )
 }
