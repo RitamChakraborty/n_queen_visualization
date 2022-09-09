@@ -13,6 +13,7 @@
     --large-font-size: 1.5rem;
     --font-color: #444444;
     --border-color: #555555;
+    --border-color-light: #888888;
     --unselected-color: #777777;
     --disabled-color: #999999;
     --animation-delay: 200ms;
@@ -20,4 +21,25 @@
 
 body {
     color: var(--font-color);
+}
+
+button {
+    padding: 0.25rem 1rem;
+    outline: none;
+    border: 2px solid var(--border-color);
+    min-width: 75px;
+}
+
+button:focus, button:active {
+    border: none;
+    outline: none;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    color: var(--disabled-color);
+}
+
+input:disabled {
+    cursor: not-allowed;
 }
