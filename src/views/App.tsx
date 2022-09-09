@@ -43,6 +43,7 @@ export default function App() {
                     </select>
                     <button onClick={start}>Start</button>
                 </nav>
+                <div className="solutions">Solutions : {boardModel.solutions}</div>
                 <div className="boards">
                     {
                         boardModel.board.map((board: any[], i: number) => {

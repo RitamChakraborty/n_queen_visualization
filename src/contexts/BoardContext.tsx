@@ -6,8 +6,9 @@ type BoardProviderProps = {
 
 type BoardModel = {
     board: any[];
+    solutions: number;
     start: (n: number) => void;
-    reset: () => void
+    reset: () => void;
 }
 
 export const BoardContext = createContext<BoardModel | null>(null);
@@ -39,6 +40,7 @@ export function BoardProvider(props: BoardProviderProps) {
 
     function resetBoard() {
         setBoard([]);
+        setSolutions(0);
     }
 
     async function start(order: number) {
@@ -158,6 +160,7 @@ export function BoardProvider(props: BoardProviderProps) {
     return (
         <BoardContext.Provider value={{
             board: board,
+            solutions: solutions,
             start: start,
             reset: resetBoard
         }}>
