@@ -1,5 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Prompt', sans-serif;
+}
+
+:root {
+    --small-font-size: 1rem;
+    --medium-font-size: 1.25rem;
+    --large-font-size: 1.5rem;
+    --font-color: #444444;
+    --border-color: #555555;
+    --unselected-color: #777777;
+    --disabled-color: #999999;
+    --animation-delay: 200ms;
+}
+
+body {
+    color: var(--font-color);
 }

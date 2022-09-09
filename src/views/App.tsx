@@ -5,29 +5,16 @@ import Boards from "../components/boards/Boards";
 import {QueenSelector} from "../components";
 
 export default function App() {
-    const queens = useRef<HTMLSelectElement>(null);
     const speed = useRef<HTMLInputElement>(null);
     const boardModel = useContext(BoardContext)!;
 
     // On Mount
     useEffect(() => {
-        if (!queens!.current!.value) {
-            queens!.current!.value = "4";
-        }
         boardModel.setSpeed(getSpeed());
     });
 
-    function onQueensChange() {
-        boardModel.reset();
-    }
-
-    function getSelectedQueens(): number {
-        return parseInt(queens!.current!.value);
-    }
-
     function start() {
-        const queens = getSelectedQueens();
-        boardModel.start(queens);
+        boardModel.start();
     }
 
     function getSpeed(): number {
@@ -47,17 +34,6 @@ export default function App() {
             <div className="container">
                 <nav>
                     <QueenSelector/>
-                    <select
-                        name="queens"
-                        id="queens"
-                        placeholder="Select number of queens"
-                        ref={queens}
-                        onChange={onQueensChange}
-                        disabled={boardModel.status === Status.IN_PROGRESS}
-                    >
-                        <option value="4">4 Queens</option>
-                        <option value="8">8 Queens</option>
-                    </select>
                     <input
                         type="range"
                         name="speed"
