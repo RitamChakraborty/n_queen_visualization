@@ -15,6 +15,7 @@ export default function App() {
     });
 
     function onQueensChange() {
+        boardModel.reset();
     }
 
     function getSelectedQueens(): number {
