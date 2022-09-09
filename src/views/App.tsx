@@ -37,6 +37,10 @@ export default function App() {
         boardModel.setSpeed(getSpeed());
     }
 
+    function reset() {
+        location.reload();
+    }
+
     return (
         <div id="Home">
             <div className="container">
@@ -52,11 +56,6 @@ export default function App() {
                         <option value="4">4 Queens</option>
                         <option value="8">8 Queens</option>
                     </select>
-                    <button
-                        onClick={start}
-                        disabled={boardModel.status === Status.IN_PROGRESS}
-                    >Start
-                    </button>
                     <input
                         type="range"
                         name="speed"
@@ -68,6 +67,17 @@ export default function App() {
                         onChange={onSpeedChange}
                         disabled={boardModel.status === Status.IN_PROGRESS}
                     />
+                    <span>{boardModel.speed}ms</span>
+                    <button
+                        onClick={start}
+                        disabled={boardModel.status === Status.IN_PROGRESS}
+                    >Start
+                    </button>
+                    <button
+                        onClick={reset}
+                    >
+                        Reset
+                    </button>
                 </nav>
                 <div className="solutions">Solutions : {boardModel.solutions}</div>
                 <div className="boards">
