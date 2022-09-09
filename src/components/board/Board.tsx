@@ -8,7 +8,7 @@ type BoardProps = {
 export default function Board(props: BoardProps) {
     return (
         <div
-            id="board"
+            id="Board"
             style={{
                 gridTemplateColumns: `repeat(${props.board.length}, 1fr)`
             }}
