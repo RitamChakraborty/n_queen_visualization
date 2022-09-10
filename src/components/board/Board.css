@@ -2,7 +2,7 @@
     display: grid;
     place-items: center;
     width: min-content;
-    border: 1px solid black;
+    border: 1px solid var(--border-color-light);
     height: min-content;
 }
 
