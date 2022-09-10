@@ -5,7 +5,18 @@ type CellProps = {
     value: number;
 }
 
+enum CellColor {
+    BLACK,
+    WHITE
+}
+
 export default function Cell(props: CellProps) {
+    function getCellColor(): CellColor {
+        if (Math.floor(props.index / 10) % 2 == 0)
+            return props.index % 2 == 0 ? CellColor.BLACK : CellColor.WHITE;
+        return props.index % 2 == 0 ? CellColor.WHITE : CellColor.BLACK;
+    }
+
     function getCellValue(): string {
         if (props.value === 1) {
             return "👸";
@@ -14,11 +25,12 @@ export default function Cell(props: CellProps) {
         }
     }
 
-    function getCellBackgroundColor(): string {
-        if (Math.floor(props.index / 10) % 2 == 0) {
-            return props.index % 2 == 0 ? 'black' : 'white';
-        } else {
-            return props.index % 2 == 0 ? 'white' : 'black';
+    function getCellBackgroundColor() {
+        switch (getCellColor()) {
+            case CellColor.WHITE:
+                return 'var(--light-background-color)';
+            case CellColor.BLACK:
+                return 'var(--dark-background-color)';
         }
     }
 
