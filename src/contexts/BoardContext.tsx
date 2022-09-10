@@ -175,16 +175,18 @@ export function BoardProvider(props: BoardProviderProps) {
     }
 
     return (
-        <BoardContext.Provider value={{
-            board: board,
-            solutions: solutions,
-            speed: delayInMills,
-            status: status,
-            setQueens: setQueens,
-            start: start,
-            setSpeed: onSpeedChange,
-            reset: resetBoard,
-        }}>
+        <BoardContext.Provider
+            value={{
+                board: board,
+                solutions: solutions,
+                speed: delayInMills,
+                status: status,
+                setQueens: setQueens,
+                start: start,
+                setSpeed: onSpeedChange,
+                reset: resetBoard,
+            }}
+        >
             {props.children}
         </BoardContext.Provider>
     );

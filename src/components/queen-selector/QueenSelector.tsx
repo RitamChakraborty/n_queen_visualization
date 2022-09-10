@@ -1,19 +1,14 @@
 import {BoardContext, BoardModel, Status} from "../../contexts/BoardContext";
-import {useContext, useEffect, useState} from "react";
+import {useContext} from "react";
 import "./QueenSelector.css";
-
-enum Queens {
-    FOUR_QUEENS = 4,
-    EIGHT_QUEENS = 8
-}
+import Queens from "../../model/Queens";
+import {LocalStorageContext, LocalStorageModel} from "../../contexts/LocalStorageContext";
 
 export default function QueenSelector() {
     const boardModel: BoardModel = useContext(BoardContext)!;
-    const [queens, setQueens] = useState<Queens>(Queens.FOUR_QUEENS);
-
-    useEffect(() => {
-        boardModel.setQueens(queens.valueOf());
-    });
+    const localStorageModel: LocalStorageModel = useContext(LocalStorageContext)!;
+    const queens = localStorageModel.queens;
+    const setQueens = localStorageModel.setQueens;
 
     function onQueensSelectionChange(queens: Queens) {
         setQueens(queens);
