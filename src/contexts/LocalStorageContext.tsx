@@ -5,6 +5,9 @@ import {getValueFromLocalStorage, setValueInLocalStorage} from "../service/Local
 export type LocalStorageModel = {
     queens: Queens;
     speed: number;
+    minSpeed: number;
+    maxSpeed: number;
+    speedStep: number;
     setQueens: (queen: Queens) => void;
     setSpeed: (speed: number) => void;
 }
@@ -20,6 +23,11 @@ export function LocalStorageProvider(props: LocalStorageProviderProps) {
     const [speed, setSpeed] = useState<number>(0);
 
     useEffect(() => {
+        getQueensFromLocalStorage();
+        getSpeedFromLocalStorage();
+    }, []);
+
+    function getQueensFromLocalStorage() {
         const localStorageQueensValue = getValueFromLocalStorage("QUEENS");
 
         if (localStorageQueensValue === null) {
@@ -39,11 +47,28 @@ export function LocalStorageProvider(props: LocalStorageProviderProps) {
                 }
             }
         }
-    }, []);
+    }
+
+    function getSpeedFromLocalStorage() {
+        const localStorageSpeedValue = getValueFromLocalStorage("SPEED");
+
+        if (localStorageSpeedValue === null) {
+            setValueInLocalStorage("SPEED", "0");
+            setSpeed(0);
+        } else {
+            const speedValue = parseInt(localStorageSpeedValue);
+            setSpeed(speedValue);
+        }
+    }
 
     function setQueensInLocalStorage(q: Queens) {
         setQueens(q);
         setValueInLocalStorage("QUEENS", q.toString());
+    }
+
+    function setSpeedInLocalStorage(s: number) {
+        setSpeed(s);
+        setValueInLocalStorage("SPEED", s.toString());
     }
 
     return (
@@ -51,8 +76,11 @@ export function LocalStorageProvider(props: LocalStorageProviderProps) {
             value={{
                 queens: queens,
                 speed: speed,
+                minSpeed: 0,
+                maxSpeed: 2000,
+                speedStep: 50,
                 setQueens: setQueensInLocalStorage,
-                setSpeed: setSpeed
+                setSpeed: setSpeedInLocalStorage
             }}
         >
             {props.children}

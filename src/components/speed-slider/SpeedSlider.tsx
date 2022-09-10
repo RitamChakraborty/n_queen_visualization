@@ -1,38 +1,30 @@
 import {BoardContext, BoardModel, Status} from "../../contexts/BoardContext";
-import {useContext, useLayoutEffect, useRef} from "react";
+import {ChangeEvent, useContext} from "react";
 import "./SpeedSlider.css";
+import {LocalStorageContext, LocalStorageModel} from "../../contexts/LocalStorageContext";
 
 export default function SpeedSlider() {
-    const speed = useRef<HTMLInputElement>(null);
     const boardModel: BoardModel = useContext(BoardContext)!;
+    const localStorageModel: LocalStorageModel = useContext(LocalStorageContext)!;
+    const speed = localStorageModel.speed;
+    const setSpeed = localStorageModel.setSpeed;
 
-    useLayoutEffect(() => {
-        boardModel.setSpeed(getSpeed());
-    });
-
-    function getSpeed(): number {
-        return speed.current ? parseInt(speed!.current!.value) : 0;
-    }
-
-    function onSpeedChange() {
-        boardModel.setSpeed(getSpeed());
+    function onSpeedChange(e: ChangeEvent<HTMLInputElement>) {
+        setSpeed(parseInt(e.target.value));
     }
 
     return (
         <div id="SpeedSlider">
             <input
                 type="range"
-                name="speed"
-                id="speed"
-                max="2000"
-                min="0"
-                defaultValue="0"
-                step="50"
-                ref={speed}
-                onChange={onSpeedChange}
+                min={localStorageModel.minSpeed}
+                max={localStorageModel.maxSpeed}
+                step={localStorageModel.speedStep}
+                value={speed}
+                onChange={(e) => onSpeedChange(e)}
                 disabled={boardModel.status === Status.IN_PROGRESS}
             />
-            <p>{getSpeed()} ms</p>
+            <p>{speed} ms</p>
         </div>
     )
 }

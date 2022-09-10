@@ -1,4 +1,5 @@
-import {createContext, ReactNode, useState} from "react";
+import {createContext, ReactNode, useContext, useState} from "react";
+import {LocalStorageContext, LocalStorageModel} from "./LocalStorageContext";
 
 type BoardProviderProps = {
     children: ReactNode;
@@ -13,11 +14,8 @@ export enum Status {
 export type BoardModel = {
     board: any[];
     solutions: number;
-    speed: number;
     status: Status;
-    setQueens: any;
     start: () => void;
-    setSpeed: (speed: number) => void;
     reset: () => void;
 }
 
@@ -26,9 +24,10 @@ export const BoardContext = createContext<BoardModel | null>(null);
 export function BoardProvider(props: BoardProviderProps) {
     const [board, setBoard] = useState<any[]>([]);
     const [solutions, setSolutions] = useState<number>(0);
-    const [delayInMills, setDelayInMills] = useState<number>(0);
     const [status, setStatus] = useState<Status>(Status.INITIAL);
-    const [queens, setQueens] = useState<number>(0);
+    const localStorageModel: LocalStorageModel = useContext(LocalStorageContext)!;
+    const queens = localStorageModel.queens;
+    const speed = localStorageModel.speed;
 
     let n = 0;
     let b: any[] = [];
@@ -53,10 +52,6 @@ export function BoardProvider(props: BoardProviderProps) {
     function resetBoard() {
         setBoard([]);
         setSolutions(0);
-    }
-
-    async function onSpeedChange(speed: number) {
-        setDelayInMills(speed);
     }
 
     async function start() {
@@ -89,7 +84,7 @@ export function BoardProvider(props: BoardProviderProps) {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve('resolve');
-            }, delayInMills);
+            }, speed);
         });
     }
 
@@ -179,11 +174,8 @@ export function BoardProvider(props: BoardProviderProps) {
             value={{
                 board: board,
                 solutions: solutions,
-                speed: delayInMills,
                 status: status,
-                setQueens: setQueens,
                 start: start,
-                setSpeed: onSpeedChange,
                 reset: resetBoard,
             }}
         >
