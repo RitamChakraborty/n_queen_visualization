@@ -28,7 +28,12 @@
 }
 
 .selected span {
+    transition: var(--animation-delay) ease-in-out;
     animation: border-animation var(--animation-delay) ease-in-out forwards;
+}
+
+.selected:disabled span {
+    border-bottom: 3px dotted var(--border-color-light) !important;
 }
 
 @keyframes border-animation {
@@ -37,6 +42,6 @@
     }
 
     to {
-        border-bottom: 3px solid #555555;
+        border-bottom: 3px solid var(--border-color);
     }
 }
