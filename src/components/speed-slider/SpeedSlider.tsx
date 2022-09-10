@@ -27,7 +27,7 @@ export default function SpeedSlider() {
                 max="2000"
                 min="0"
                 defaultValue="0"
-                step="100"
+                step="50"
                 ref={speed}
                 onChange={onSpeedChange}
                 disabled={boardModel.status === Status.IN_PROGRESS}
