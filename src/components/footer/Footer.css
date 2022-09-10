@@ -1,0 +1,18 @@
+#Footer {
+    min-height: 3rem;
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    background-color: var(--light-background-color);
+    display: grid;
+    place-self: center;
+    padding: 0.5rem;
+}
+
+p {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

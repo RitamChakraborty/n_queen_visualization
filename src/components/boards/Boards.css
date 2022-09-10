@@ -1,5 +1,5 @@
 #Boards {
-    height: 70vh;
+    height: 55vh;
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -15,4 +15,10 @@
 
 #Boards::-webkit-scrollbar-thumb {
     background-color: var(--scroll-bar-thumb-background-color);
+}
+
+@media screen and (min-width: 1200px) {
+    #Boards {
+        height: 70vh;
+    }
 }

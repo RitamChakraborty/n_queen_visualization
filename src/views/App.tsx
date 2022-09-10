@@ -2,6 +2,7 @@ import './App.css';
 import Boards from "../components/boards/Boards";
 import Solutions from "../components/solutions/Solutions";
 import Nav from "../components/nav/Nav";
+import Footer from "../components/footer/Footer";
 
 export default function App() {
     return (
@@ -11,6 +12,7 @@ export default function App() {
                 <Solutions/>
                 <Boards/>
             </div>
+            <Footer/>
         </div>
     );
 }
