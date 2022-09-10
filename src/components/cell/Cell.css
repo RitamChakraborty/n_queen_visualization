@@ -4,3 +4,13 @@
     height: 30px;
     width: 30px;
 }
+
+.queen {
+    display: grid;
+    place-items: center;
+}
+
+.queen img {
+    height: 25px;
+    width: 25px;
+}

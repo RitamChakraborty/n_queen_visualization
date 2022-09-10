@@ -1,4 +1,6 @@
 import './Cell.css';
+import whiteQueen from "../../assets/white-queen.svg";
+import blackQueen from "../../assets/black-queen.svg";
 
 type CellProps = {
     index: number;
@@ -17,12 +19,19 @@ export default function Cell(props: CellProps) {
         return props.index % 2 == 0 ? CellColor.WHITE : CellColor.BLACK;
     }
 
-    function getCellValue(): string {
-        if (props.value === 1) {
-            return "👸";
-        } else {
-            return " ";
+    function getQueen(): string {
+        switch (getCellColor()) {
+            case CellColor.WHITE:
+                return blackQueen;
+            case CellColor.BLACK:
+                return whiteQueen;
         }
+    }
+
+    function getCellValue() {
+        if (props.value === 1)
+            return <img src={getQueen()} alt="queen"/>;
+        return <></>;
     }
 
     function getCellBackgroundColor() {
@@ -41,7 +50,9 @@ export default function Cell(props: CellProps) {
                 backgroundColor: getCellBackgroundColor()
             }}
         >
-            <span>{getCellValue()}</span>
+            <div className="queen">
+                {getCellValue()}
+            </div>
         </div>
     );
 }
