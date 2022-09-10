@@ -108,7 +108,7 @@ export function BoardProvider(props: BoardProviderProps) {
                 const newValue: any[] = [];
 
                 if (value.length > 1) {
-                    for (let i = 0; i < value.length - 1; ++i) {
+                    for (let i = 1; i < value.length; ++i) {
                         const oldValue = [];
                         for (let j = 0; j < n; ++j) {
                             const temp = [];
