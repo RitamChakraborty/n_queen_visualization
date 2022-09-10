@@ -26,6 +26,12 @@ The application is built with
 2. CSS
 3. Vite
 
+### Demo
+
+<p align="center">
+    <img src="./.screenshots/demo.gif" alt="demo" />
+</p>
+
 ### Deployment
 
 The application is deployed to *GitHub Pages* with *GitHub Actions* . Checkout the website [here](https://ritamchakraborty.github.io/n_queen_visualization).
